@@ -124,20 +124,20 @@ Enhanced Response + Sources + Historical Insights
 ```
 c-aira-incident-assistant/
 │
-├── chatbot_enhanced.py      # Main application
-├── requirements.txt         # Python dependencies
 ├── .env.example            # AWS credentials template
-├── .gitignore              # Git ignore rules
-├── HOW_TO_RUN.md           # Quick start guide
-├── VIDEO_SCRIPT.md         # Video recording guide
+├── .gitignore             # Git ignore rules
+├── README.md              # Main documentation
+├── requirements.txt       # Python dependencies
+├── chatbot_enhanced.py    # Main application
+├── test_external_data.py  # External data integration tests
 │
-├── data/                   # Knowledge base
-│   ├── incidents/          # Incident reports (3 files)
-│   ├── runbooks/          # Resolution procedures (3 files)
-│   ├── logs/              # Log samples (2 files)
+├── data/                  # Knowledge base
+│   ├── incidents/         # Incident reports (3 files)
+│   ├── runbooks/         # Resolution procedures (3 files)
+│   ├── logs/             # Log samples (2 files)
 │   └── incident_stats.csv # CSV analytics (136 incidents)
 │
-└── src/                    # Source code modules
+└── src/                   # Source code modules
     └── data_sources/
         ├── __init__.py
         ├── csv_analyzer.py      # CSV analytics logic
