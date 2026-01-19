@@ -27,3 +27,6 @@ Thumbs.db
 # Project specific
 vector_store/
 *.log
+
+logs/
+vector_store/
