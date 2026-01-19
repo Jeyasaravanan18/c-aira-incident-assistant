@@ -1,0 +1,32 @@
+INCIDENT REPORT #2024-001
+Date: 2024-01-15
+Severity: High
+Status: Resolved
+
+SUMMARY:
+Database connection timeout errors affecting production API services. Multiple users reported 500 Internal Server Error responses when accessing customer data endpoints.
+
+SYMPTOMS:
+- API response time degraded from ~200ms to 5000ms+
+- Connection pool exhausted (50/50 connections in use)
+- Database logs showing "too many connections" errors
+- Application logs showing "connection timeout after 30 seconds"
+
+ROOT CAUSE:
+Investigation revealed that a recent deployment introduced a connection leak. The database connection pool was not properly releasing connections after query completion due to missing connection.close() calls in error handling paths.
+
+RESOLUTION STEPS:
+1. Identified the problematic code in the UserService.java file
+2. Added proper connection cleanup in finally blocks
+3. Increased connection pool timeout from 30s to 60s as temporary measure
+4. Deployed hotfix to production
+5. Monitored connection pool metrics for 2 hours
+6. Verified all connections were being properly released
+
+PREVENTION:
+- Added automated tests for connection pool management
+- Implemented connection pool monitoring alerts
+- Updated coding standards to require try-finally blocks for all database operations
+- Scheduled code review of all database access patterns
+
+TIME TO RESOLUTION: 2 hours 15 minutes

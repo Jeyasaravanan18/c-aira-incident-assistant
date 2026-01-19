@@ -1,0 +1,13 @@
+month,incident_type,count,avg_resolution_hours,severity,status
+2024-01,database_timeout,12,2.5,high,resolved
+2024-01,auth_failure,8,1.2,critical,resolved
+2024-01,disk_space,15,3.0,medium,resolved
+2024-02,database_timeout,10,2.1,high,resolved
+2024-02,auth_failure,5,1.5,critical,resolved
+2024-02,disk_space,18,2.8,medium,resolved
+2024-03,database_timeout,8,2.0,high,resolved
+2024-03,auth_failure,3,1.0,critical,resolved
+2024-03,disk_space,12,2.5,medium,resolved
+2024-04,database_timeout,15,3.2,high,resolved
+2024-04,auth_failure,10,1.8,critical,resolved
+2024-04,disk_space,20,3.5,medium,resolved

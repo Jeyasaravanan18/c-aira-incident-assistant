@@ -1,0 +1,35 @@
+INCIDENT REPORT #2024-003
+Date: 2024-01-20
+Severity: Medium
+Status: Resolved
+
+SUMMARY:
+Disk space exhaustion on application servers causing service degradation and failed deployments.
+
+SYMPTOMS:
+- Application logs not being written
+- Deployment pipeline failing with "No space left on device"
+- Server health checks intermittently failing
+- Slow application response times
+- Disk usage at 100% on /var partition
+
+ROOT CAUSE:
+Log rotation was not configured properly for the application logs. Debug-level logging was enabled in production, generating excessive log volume (50GB+ per day). Old logs were not being cleaned up automatically.
+
+RESOLUTION STEPS:
+1. Identified /var/log/application/ consuming 95% of disk space
+2. Compressed and archived logs older than 7 days
+3. Deleted archived logs older than 30 days
+4. Changed log level from DEBUG to INFO in production
+5. Configured logrotate to rotate daily and keep only 14 days
+6. Set up disk space monitoring alerts at 80% threshold
+7. Verified log rotation working correctly
+
+PREVENTION:
+- Implemented automated log cleanup scripts
+- Added disk space monitoring to all servers
+- Created alerts for disk usage > 80%
+- Updated deployment checklist to verify log rotation config
+- Documented log management best practices
+
+TIME TO RESOLUTION: 1 hour 30 minutes

@@ -1,0 +1,31 @@
+APPLICATION LOG SAMPLE - Authentication Error
+Timestamp: 2024-01-18T09:15:42.123Z
+Level: ERROR
+Service: auth-service
+Instance: prod-auth-02
+
+Error Message:
+io.jsonwebtoken.security.SignatureException: JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.
+    at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:354)
+    at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:481)
+    at com.company.auth.JwtTokenValidator.validateToken(JwtTokenValidator.java:67)
+    at com.company.auth.AuthenticationFilter.doFilter(AuthenticationFilter.java:89)
+
+Additional Context:
+- Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+- Expected Algorithm: HS256
+- Actual Algorithm: RS256
+- User: user@company.com
+- Request Path: /api/users/profile
+
+Root Cause Analysis:
+JWT library was upgraded from version 0.11.2 to 0.12.0, which changed the default signing algorithm from HS256 to RS256. The token validation code still expects HS256, causing all token validations to fail.
+
+Recommended Actions:
+1. Verify JWT signing algorithm configuration in AuthConfig.java
+2. Ensure consistency between token generation and validation
+3. Consider rolling back JWT library version
+4. Clear all cached tokens after configuration fix
+5. Restart all authentication service instances
+
+Related Incidents: #2024-002

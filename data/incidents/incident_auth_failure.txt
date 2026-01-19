@@ -1,0 +1,34 @@
+INCIDENT REPORT #2024-002
+Date: 2024-01-18
+Severity: Critical
+Status: Resolved
+
+SUMMARY:
+Authentication service failure causing complete login outage across all applications. Users unable to authenticate, receiving "Invalid token type" errors.
+
+SYMPTOMS:
+- All login attempts failing with 401 Unauthorized
+- Error logs showing "Invalid token type" repeatedly
+- JWT token validation failing
+- Authentication service health check returning 500 errors
+
+ROOT CAUSE:
+The authentication service was updated with a new JWT library version that changed the default token signing algorithm from HS256 to RS256. The token verification code was still configured to expect HS256 tokens, causing all validation to fail.
+
+RESOLUTION STEPS:
+1. Identified mismatch in JWT signing algorithm configuration
+2. Updated AuthConfig.java to support both HS256 and RS256
+3. Rolled back to previous JWT library version as immediate fix
+4. Cleared all cached tokens from Redis
+5. Restarted authentication service instances
+6. Verified login functionality across all applications
+7. Monitored error rates for 1 hour
+
+PREVENTION:
+- Added integration tests for JWT token generation and validation
+- Implemented configuration validation on service startup
+- Created runbook for authentication service updates
+- Added alerts for authentication failure rate spikes
+
+TIME TO RESOLUTION: 45 minutes
+IMPACT: ~5,000 users affected during outage window

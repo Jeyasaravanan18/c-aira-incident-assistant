@@ -1,0 +1,25 @@
+APPLICATION LOG SAMPLE - Database Connection Error
+Timestamp: 2024-01-15T14:32:18.456Z
+Level: ERROR
+Service: user-service
+Instance: prod-app-01
+
+Stack Trace:
+java.sql.SQLTimeoutException: Connection is not available, request timed out after 30000ms.
+    at com.zaxxer.hikari.pool.HikariPool.createTimeoutException(HikariPool.java:548)
+    at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:186)
+    at com.zaxxer.hikari.pool.HikariPool.getConnection(HikariPool.java:145)
+    at com.company.service.UserService.getUserById(UserService.java:45)
+    at com.company.controller.UserController.getUser(UserController.java:78)
+
+Additional Context:
+- Connection pool status: 50/50 connections active
+- Database host: db-primary.internal:5432
+- Query: SELECT * FROM users WHERE id = ?
+- Request ID: req-abc-123-def
+- User ID: user-456
+
+Resolution Notes:
+This error indicates the connection pool is exhausted. Check for connection leaks in the application code. Ensure all database connections are properly closed in finally blocks. Monitor the connection pool metrics to identify which operations are holding connections for extended periods.
+
+Related Incidents: #2024-001
