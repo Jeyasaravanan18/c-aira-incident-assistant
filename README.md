@@ -403,12 +403,59 @@ Expected output:
 ### AWS Bedrock Errors
 
 **Problem**: `AccessDeniedException` or model errors
+**Problem**: `AccessDeniedException` or model invocation errors
 
 **Solutions**:
-1. Verify AWS credentials in `.env`
-2. Ensure Bedrock is enabled in eu-north-1
-3. Check model ID: `amazon.nova-lite-v1:0`
-4. Verify IAM permissions for Bedrock
+1. Verify AWS credentials in `.env` file
+   ```bash
+   # Check .env file exists and has correct format
+   AWS_ACCESS_KEY_ID=your_key
+   AWS_SECRET_ACCESS_KEY=your_secret
+   AWS_REGION=eu-north-1
+   MODEL_ID=amazon.nova-lite-v1:0
+   ```
+2. Ensure Bedrock is enabled in `eu-north-1` region
+3. Verify model ID is correct: `amazon.nova-lite-v1:0`
+4. Check IAM permissions for Bedrock access
+5. Confirm AWS account has Bedrock access enabled
+
+### Import Errors
+
+**Problem**: `ModuleNotFoundError` for packages
+
+**Solutions**:
+1. Install missing dependencies
+   ```bash
+   pip install streamlit boto3 pandas plotly python-dotenv
+   ```
+2. Verify virtual environment is activated
+3. Check Python version (requires 3.8+)
+   ```bash
+   python --version
+   ```
+
+### CSV Analytics Not Working
+
+**Problem**: Analytics dashboard shows no data
+
+**Solutions**:
+1. Verify `data/incident_stats.csv` exists
+2. Check CSV file format matches expected structure
+3. Review console for CSV parsing errors
+4. Ensure pandas is installed correctly
+
+### GitHub API Issues
+
+**Problem**: External data tab shows errors
+
+**Solutions**:
+1. Check internet connection
+2. Verify GitHub Status API is accessible
+   ```bash
+   curl https://www.githubstatus.com/api/v2/status.json
+   ```
+3. Review API rate limits (shouldn't be an issue with caching)
+4. Check console for detailed error messages
 
 ---
 
